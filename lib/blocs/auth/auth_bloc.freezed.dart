@@ -16,37 +16,48 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthEvent {
+  UserEntity? get user => throw _privateConstructorUsedError;
+  String? get token => throw _privateConstructorUsedError;
+  bool get isAuthenticated => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
+    required TResult Function(
+            UserEntity? user, String? token, bool isAuthenticated)
+        authenticate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
+    TResult? Function(UserEntity? user, String? token, bool isAuthenticated)?
+        authenticate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
+    TResult Function(UserEntity? user, String? token, bool isAuthenticated)?
+        authenticate,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
+    required TResult Function(Authenticated value) authenticate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
+    TResult? Function(Authenticated value)? authenticate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
+    TResult Function(Authenticated value)? authenticate,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AuthEventCopyWith<AuthEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -54,6 +65,10 @@ mixin _$AuthEvent {
 abstract class $AuthEventCopyWith<$Res> {
   factory $AuthEventCopyWith(AuthEvent value, $Res Function(AuthEvent) then) =
       _$AuthEventCopyWithImpl<$Res, AuthEvent>;
+  @useResult
+  $Res call({UserEntity? user, String? token, bool isAuthenticated});
+
+  $UserEntityCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -65,66 +80,154 @@ class _$AuthEventCopyWithImpl<$Res, $Val extends AuthEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = freezed,
+    Object? token = freezed,
+    Object? isAuthenticated = null,
+  }) {
+    return _then(_value.copyWith(
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserEntity?,
+      token: freezed == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isAuthenticated: null == isAuthenticated
+          ? _value.isAuthenticated
+          : isAuthenticated // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserEntityCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserEntityCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$_StartedCopyWith<$Res> {
-  factory _$$_StartedCopyWith(
-          _$_Started value, $Res Function(_$_Started) then) =
-      __$$_StartedCopyWithImpl<$Res>;
+abstract class _$$AuthenticatedCopyWith<$Res>
+    implements $AuthEventCopyWith<$Res> {
+  factory _$$AuthenticatedCopyWith(
+          _$Authenticated value, $Res Function(_$Authenticated) then) =
+      __$$AuthenticatedCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({UserEntity? user, String? token, bool isAuthenticated});
+
+  @override
+  $UserEntityCopyWith<$Res>? get user;
 }
 
 /// @nodoc
-class __$$_StartedCopyWithImpl<$Res>
-    extends _$AuthEventCopyWithImpl<$Res, _$_Started>
-    implements _$$_StartedCopyWith<$Res> {
-  __$$_StartedCopyWithImpl(_$_Started _value, $Res Function(_$_Started) _then)
+class __$$AuthenticatedCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$Authenticated>
+    implements _$$AuthenticatedCopyWith<$Res> {
+  __$$AuthenticatedCopyWithImpl(
+      _$Authenticated _value, $Res Function(_$Authenticated) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = freezed,
+    Object? token = freezed,
+    Object? isAuthenticated = null,
+  }) {
+    return _then(_$Authenticated(
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserEntity?,
+      token: freezed == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isAuthenticated: null == isAuthenticated
+          ? _value.isAuthenticated
+          : isAuthenticated // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$_Started implements _Started {
-  const _$_Started();
+class _$Authenticated implements Authenticated {
+  const _$Authenticated({this.user, this.token, required this.isAuthenticated});
+
+  @override
+  final UserEntity? user;
+  @override
+  final String? token;
+  @override
+  final bool isAuthenticated;
 
   @override
   String toString() {
-    return 'AuthEvent.started()';
+    return 'AuthEvent.authenticate(user: $user, token: $token, isAuthenticated: $isAuthenticated)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Started);
+        (other.runtimeType == runtimeType &&
+            other is _$Authenticated &&
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.isAuthenticated, isAuthenticated) ||
+                other.isAuthenticated == isAuthenticated));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, user, token, isAuthenticated);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AuthenticatedCopyWith<_$Authenticated> get copyWith =>
+      __$$AuthenticatedCopyWithImpl<_$Authenticated>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
+    required TResult Function(
+            UserEntity? user, String? token, bool isAuthenticated)
+        authenticate,
   }) {
-    return started();
+    return authenticate(user, token, isAuthenticated);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
+    TResult? Function(UserEntity? user, String? token, bool isAuthenticated)?
+        authenticate,
   }) {
-    return started?.call();
+    return authenticate?.call(user, token, isAuthenticated);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
+    TResult Function(UserEntity? user, String? token, bool isAuthenticated)?
+        authenticate,
     required TResult orElse(),
   }) {
-    if (started != null) {
-      return started();
+    if (authenticate != null) {
+      return authenticate(user, token, isAuthenticated);
     }
     return orElse();
   }
@@ -132,34 +235,48 @@ class _$_Started implements _Started {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
+    required TResult Function(Authenticated value) authenticate,
   }) {
-    return started(this);
+    return authenticate(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
+    TResult? Function(Authenticated value)? authenticate,
   }) {
-    return started?.call(this);
+    return authenticate?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
+    TResult Function(Authenticated value)? authenticate,
     required TResult orElse(),
   }) {
-    if (started != null) {
-      return started(this);
+    if (authenticate != null) {
+      return authenticate(this);
     }
     return orElse();
   }
 }
 
-abstract class _Started implements AuthEvent {
-  const factory _Started() = _$_Started;
+abstract class Authenticated implements AuthEvent {
+  const factory Authenticated(
+      {final UserEntity? user,
+      final String? token,
+      required final bool isAuthenticated}) = _$Authenticated;
+
+  @override
+  UserEntity? get user;
+  @override
+  String? get token;
+  @override
+  bool get isAuthenticated;
+  @override
+  @JsonKey(ignore: true)
+  _$$AuthenticatedCopyWith<_$Authenticated> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

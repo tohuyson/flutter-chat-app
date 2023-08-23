@@ -8,7 +8,7 @@ part 'auth_bloc.freezed.dart';
 
 class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthState.initial()) {
-    on<AuthEvent>((event, emit) {
+    on<Authenticated>((event, emit) {
       // TODO: implement event handler
     });
   }
