@@ -45,7 +45,7 @@ class AuthRepository extends BaseAuthRepository {
 
   @override
   Future<AppResponse> logout() async {
-    final response = await _dioClient.post(
+    final response = await _dioClient.get(
       EndPoints.logout,
     );
 

@@ -15,7 +15,7 @@ class EndPoints {
 
   static const String getChats = _baseAuth;
   static const String getSingleChat = "$_baseAuth/";
-  static const String create = _baseAuth;
+  static const String createChat = _baseAuth;
 
   /// Chat message
   static const String _baseChatMessage = "$_apiVersion/chat_message";
