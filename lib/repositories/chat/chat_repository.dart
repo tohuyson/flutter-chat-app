@@ -30,7 +30,7 @@ class ChatRepository extends BaseChatRepository {
 
   @override
   Future<AppResponse<List<ChatEntity>>> getChats() async {
-    final response = await _dioClient.post(
+    final response = await _dioClient.get(
       EndPoints.getChats,
     );
 
@@ -43,8 +43,15 @@ class ChatRepository extends BaseChatRepository {
   }
 
   @override
-  Future<AppResponse<ChatEntity?>> getSingleChat(int chatId) {
-    // TODO: implement getSingleChat
-    throw UnimplementedError();
+  Future<AppResponse<ChatEntity?>> getSingleChat(int chatId) async {
+    final response =
+        await _dioClient.get("${EndPoints.getSingleChat}$chatId  ");
+
+    return AppResponse<ChatEntity?>.fromJson(
+      response.data,
+      (dynamic json) => response.data['success'] && json != null
+          ? ChatEntity.fromJson(json)
+          : null,
+    );
   }
 }

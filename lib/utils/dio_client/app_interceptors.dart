@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_chat_app/blocs/auth/auth_bloc.dart';
 import 'package:flutter_chat_app/models/models.dart';
 
 class AppInterceptors extends Interceptor {
@@ -16,12 +17,12 @@ class AppInterceptors extends Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     /// Tries to add Authorization header only if Authorization header not extisted
     if (!options.headers.containsKey(HttpHeaders.authorizationHeader)) {
-      // final state = AuthBloc().state;
+      final state = AuthBloc().state;
 
-      // if (state.token != null) {
-      //   options.headers[HttpHeaders.authorizationHeader] =
-      //       'Bearer ${state.token}';
-      // }
+      if (state.token != null) {
+        options.headers[HttpHeaders.authorizationHeader] =
+            'Bearer ${state.token}';
+      }
     }
 
     return handler.next(options);
