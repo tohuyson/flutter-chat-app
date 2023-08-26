@@ -23,6 +23,7 @@ void main() async {
         ? HydratedStorage.webStorageDirectory
         : await getTemporaryDirectory(),
   );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp();
