@@ -28,6 +28,11 @@ class ChatListScreen extends StatelessWidget {
       onInit: () async {
         chatBloc.add(const ChatStarted());
         userBloc.add(const UserStarted());
+
+        LaravelEcho.init(token: authBloc.state.token!);
+      },
+      onDisposed: (){
+        LaravelEcho.instance.disconnect();
       },
       child: Scaffold(
         appBar: AppBar(
@@ -72,7 +77,6 @@ class ChatListScreen extends StatelessWidget {
               {}
             },
             builder: (context, state) {
-              eLog(state.chats);
               if (state.chats.isEmpty) {
                 return const BlankContent(
                   content: "No chat available",
@@ -88,7 +92,6 @@ class ChatListScreen extends StatelessWidget {
                       item: item,
                       currentUser: currentUser,
                       onPressed: (chat) {
-                        vLog(chat);
                         chatBloc.add(ChatSelected(chat));
                         Navigator.of(context).pushNamed(ChatScreen.routeName);
                       });
@@ -112,10 +115,8 @@ class ChatListScreen extends StatelessWidget {
             );
           },
           builder: (context, state) {
-            eLog(state);
             return FloatingActionButton(
               onPressed: () {
-                eLog("show search user");
                 _showSearch(context, state);
               },
               child: const Icon(Icons.search),

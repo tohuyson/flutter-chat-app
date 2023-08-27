@@ -9,7 +9,11 @@ class ChatEvent with _$ChatEvent {
   const factory ChatEvent.loadMoreChatMessage() = LoadMoreChatMessage;
   const factory ChatEvent.sendMessage(
     int chatId,
-    ChatMessage message,
-  ) = SendMessage;
+    ChatMessage message, {
+    required String socketId,
+  }) = SendMessage;
   const factory ChatEvent.chatSelected(ChatEntity chat) = ChatSelected;
+
+  const factory ChatEvent.addNewMessage(ChatMessageEntity message) =
+      AddNewMessage;
 }

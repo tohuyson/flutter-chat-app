@@ -2,9 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_app/enums/data_status.dart';
-import 'package:flutter_chat_app/models/requests/create_chat_request.dart';
 import 'package:flutter_chat_app/models/requests/requests.dart';
-import 'package:flutter_chat_app/repositories/chat/chat_repository.dart';
 import 'package:flutter_chat_app/repositories/repositories.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_chat_app/models/models.dart';
@@ -73,41 +71,41 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
           if (chatResult.success) {
             chat = chatResult.data;
-          } else if (state.isListChat) {
-            chat = state.selectedChat;
           }
+        } else if (state.isListChat) {
+          chat = state.selectedChat;
+        }
 
-          if (chat == null) {
-            emit(
-              state.copyWith(
-                chatMessages: [],
-                status: DataStatus.loaded,
-              ),
-            );
-            return;
-          }
-
-          final result = await _chatMessageRepository.getChatMessages(
-            chatId: chat.id,
-            page: 1,
+        if (chat == null) {
+          emit(
+            state.copyWith(
+              chatMessages: [],
+              status: DataStatus.loaded,
+            ),
           );
+          return;
+        }
 
-          if (result.success) {
-            emit(
-              state.copyWith(
-                  chatMessages: result.data ?? [],
-                  status: DataStatus.loaded,
-                  selectedChat: chat),
-            );
-          } else {
-            emit(
-              state.copyWith(
-                chatMessages: [],
+        final result = await _chatMessageRepository.getChatMessages(
+          chatId: chat.id,
+          page: 1,
+        );
+
+        if (result.success) {
+          emit(
+            state.copyWith(
+                chatMessages: result.data ?? [],
                 status: DataStatus.loaded,
-                message: result.message,
-              ),
-            );
-          }
+                selectedChat: chat),
+          );
+        } else {
+          emit(
+            state.copyWith(
+              chatMessages: [],
+              status: DataStatus.loaded,
+              message: result.message,
+            ),
+          );
         }
       },
     );
@@ -121,6 +119,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           chatId: event.chatId,
           message: event.message.text,
         ),
+        event.socketId,
       );
 
       if (result.success) {
@@ -181,6 +180,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     });
     on<ChatSelected>((event, emit) {
       emit(state.copyWith(selectedChat: event.chat));
+    });
+    on<AddNewMessage>((event, emit) {
+      emit(state.copyWith(
+        chatMessages: [event.message, ...state.chatMessages],
+      ));
     });
   }
 }

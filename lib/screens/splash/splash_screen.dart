@@ -31,7 +31,6 @@ class _SplashScreenState extends State<SplashScreen> {
       if (!mounted) return;
 
       final authState = context.read<AuthBloc>().state;
-      eLog(authState);
 
       final redirectScreen = authState.isAuthenticated
           ? ChatListScreen.routeName
